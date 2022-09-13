@@ -33,6 +33,7 @@ class Loan extends Model {
 
     public static $LOAN_STATUS_PENDING_ID = 0;
     public static $LOAN_STATUS_APPROVED_ID= 1;
+    public static $LOAN_STATUS_PAID_ID= 2;
 
     //Model relation ship (Belongs To One) Loan Belongs To Single User (Note: Only Single user as of now. FYI : no joint relationship)
     public function user() {

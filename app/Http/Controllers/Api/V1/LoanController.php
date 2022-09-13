@@ -138,6 +138,11 @@ class LoanController extends Controller {
                     $emi->status = LoanEmi::$LOAN_EMI_STATUS_PAID_ID;
                     $emi->set_updatedAt();
                     $emi->save();
+                    $pendingEmiCount = LoanEmi::where('status',LoanEmi::$LOAN_EMI_STATUS_PENDING_ID)->count();
+                    if($pendingEmiCount==0) {
+                        $loan->status = Loan::$LOAN_STATUS_PAID_ID;
+                        $loan->save();
+                    }
                     return response()->json([
                         'status' =>true,
                         'message' => 'EMI Paid Successfully',
