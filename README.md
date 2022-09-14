@@ -37,5 +37,14 @@ Points are Task coverrred in the practical
 4. Used Laravel sanctum for API (REST API)
 5. Used One to one, one to Many and belongs relations ship in Model
 
-# Regarding Test cases, separate document is created But below command is used to check Test Cases are Pass or Failed
+# Regarding Test cases, But below command is used to check Test Cases are Pass or Failed
 php ./vendor/bin/phpunit
+
+# test Cases
+1. check site is working properly or not using root ('/') returns 200 or not
+2. Feature Test case to check Register API is working or not with the valid params
+3. Login Api Feature case to check Login is working or not
+4. Login Aoi Feature case Negative test case is working or not.
+
+Note: I have created 4 Test cases and code for this practical task. I can do anytask as per the requirement. thanks
+
