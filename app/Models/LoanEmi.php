@@ -74,14 +74,13 @@ class LoanEmi extends Model {
                 'updated_at'    => time()
             ];
             $emi_arr = [];
-            
+            $weekDay = 7;
             //Generate EMi Amount from member function
             $emiAmount = self::calculatorEmi($amount, $rate, $duration);
-            
             for($i=1;$i<=$duration;$i++) {
                 $emi_arr[$i] = $emiObject;
-                $emi_arr[$i]['emi_due_date'] = strtotime("+".(7 * $i)." days");
-                $emi_arr[$i]['emi_intrest'] = round((($pending * $rate) / 1200), 2);
+                $emi_arr[$i]['emi_due_date'] = strtotime("+".($weekDay * $i)." days");
+                $emi_arr[$i]['emi_intrest'] = round((($pending * $rate * $weekDay) / (365 * 100)), 2);//365 = 1 Year
                 $emi_arr[$i]['emi_amount']  = $emiAmount;
                 $pending-=$emi_arr[$i]['emi_principal'];
                 $emi_arr[$i]['emi_principal'] = $pending;
@@ -97,7 +96,7 @@ class LoanEmi extends Model {
     public static function calculatorEmi($p, $r, $t) { 
         $emi; 
         // one month interest 
-        $r = $r / (365 * 100);
+        $r = $r / (52 * 100);//52 as Weekly payment intrest counting(1 Year = 52 Week)
         // one month period
         $emi = ($p * $r * pow(1 + $r, $t)) /  
                       (pow(1 + $r, $t) - 1); 
