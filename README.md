@@ -37,4 +37,5 @@ Points are Task coverrred in the practical
 4. Used Laravel sanctum for API (REST API)
 5. Used One to one, one to Many and belongs relations ship in Model
 
-# Regarding Test cases, separate document is created
+# Regarding Test cases, separate document is created But below command is used to check Test Cases are Pass or Failed
+php ./vendor/bin/phpunit

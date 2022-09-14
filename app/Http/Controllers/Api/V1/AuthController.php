@@ -26,23 +26,30 @@ class AuthController extends Controller {
                 'error' => $validator->errors()
             ], 401);
         }
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->created_at = time();
-        $user->created_at = time();
-        $user->save();
-
-        $token = $user->createToken('MyAppToken')->plainTextToken;
-
-        return response()->json([
-            'status' => true,
-            'message' => 'User successfully registered',
-            'user' => $user,
-            'token' => $token
-        ], 201);
+        try {
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->created_at = time();
+            $user->created_at = time();
+            $user->save();
+    
+            $token = $user->createToken('MyAppToken')->plainTextToken;
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'User successfully registered',
+                'user' => $user,
+                'token' => $token
+            ], 200);
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Exception  Handled',
+                'error' => $ex->getMessage()
+            ], 401); 
+        }        
     }
 
     //Login API for Loan User + Admin User
@@ -57,7 +64,7 @@ class AuthController extends Controller {
                 'status' => false,
                 'message' => 'Invalid Inputs',
                 'error' => $validator->errors()
-            ], 422);
+            ], 200);
         }
 
         if (Auth::attempt(['email'=>$request->email, 'password'=>$request->password])) {
@@ -77,7 +84,7 @@ class AuthController extends Controller {
             return response()->json([
                 'status' => false,
                 'message' => 'Invalid Credentials',
-            ], 400);
+            ], 200);
         }
     }
 }
